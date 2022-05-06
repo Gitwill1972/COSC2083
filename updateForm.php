@@ -8,28 +8,30 @@
       <form action="queryUpdate.php" method="POST">
 
         <?php
-        $house_id = $_GET["form_id"];
+        $rating_id = $_GET["form_id"];
 
         $pdo = require_once 'connectDB.php';
-        $sql = 'SELECT * FROM houses
-                WHERE house_id = :house_id';
+        $sql = 'SELECT * FROM ratings
+                WHERE rating_id = :rating_id';
 
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':house_id', $house_id, PDO::PARAM_INT);
+        $stmt->bindParam(':rating_id', $rating_id, PDO::PARAM_INT);
         $stmt->execute();
-        $house = $stmt->fetch(PDO::FETCH_ASSOC);
+        $rating = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($house) {
-          echo 'Bedroom: <input type="number" name="form_bedroom" value="' . $house['bedroom'] . '"> <br/>';
-          echo 'Bathroom<input type="number" name="form_bathroom" value="' . $house['bathroom'] . '"> <br/>';
-          echo 'Floorspace: <input type="text" name="form_floorspace" value="' . $house['floorspace'] . '">m<sup>2</sup> <br/>';
-          echo 'Address: <input type="text" name="form_address" value="' . $house['address'] . '"> <br/>';
-          echo 'City: <input type="text" name="form_city" value="' . $house['city'] . '"> <br/>';
-          echo 'Country: <input type="text" name="form_country" value="' . $house['country'] . '"> <br/>';
-          echo 'Price: <input type="text" name="form_price" value="' . $house['price'] . '"> <br/>';
-          echo '<input type="hidden" name="form_id" value="' . $house['house_id'] . '"> <br/>';
+        if ($rating) {
+          echo 'Bedroom: <input type="number" name="form_bedroom" value="' . $rating['prof_name'] . '"> <br/>';
+          echo 'Bathroom<input type="number" name="form_bathroom" value="' . $rating['course_id'] . '"> <br/>';
+          echo 'Floorspace: <input type="text" name="form_floorspace" value="' . $rating['rating'] . '">m<sup>2</sup> <br/>';
+          echo 'Address: <input type="text" name="form_address" value="' . $rating['difficulty'] . '"> <br/>';
+          echo 'City: <input type="radio" name="form_take_again" value="YES" <?php> > <br/>';
+          echo 'Country: <input type="text" name="form_country" value="' . $rating['credit'] . '"> <br/>';
+          echo 'Price: <input type="text" name="form_price" value="' . $rating['text_book_use'] . '"> <br/>';
+          echo 'Price: <input type="text" name="form_price" value="' . $rating['attendance'] . '"> <br/>';
+          echo 'Price: <input type="text" name="form_price" value="' . $rating['grade'] . '"> <br/>';
+          echo '<input type="hidden" name="form_id" value="' . $rating['rating_id'] . '"> <br/>';
         } else {
-        	echo "The house with id $house_id was not found.";
+        	echo "The rating with id $rating_id was not found.";
         }
 
         $pdo = null;
